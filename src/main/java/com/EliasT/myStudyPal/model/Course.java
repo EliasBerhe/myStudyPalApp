@@ -1,6 +1,7 @@
 package com.EliasT.myStudyPal.model;
 
 import jakarta.persistence.*;
+import org.hibernate.engine.internal.Cascade;
 
 @Entity
 @Table
@@ -10,46 +11,52 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "Course Name")
+    @Column(name = "CourseName", nullable = false)
     private String courseName;
 
 
-    @Column(name = "User Name")
-    private String userName;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id",nullable = false)
 
-    public Course(){
+    private User user;
+
+
+
+
+
+
+    public Course() {
 
     }
-    public Course(int id, String courseName, String userName) {
-        this.id = id;
-        this.courseName = courseName;
-        this.userName = userName;
-    }
-
 
     public int getId() {
         return id;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public String getUserName() {
-        return userName;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    @Transient
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Course( String courseName) {
+
+        this.courseName = courseName;
+
     }
 }
-
-
